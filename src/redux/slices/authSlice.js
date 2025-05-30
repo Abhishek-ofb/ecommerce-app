@@ -16,9 +16,9 @@ export const login = createAsyncThunk(
       if (response.data.status === 'error') {
         throw new Error(response.data.message);
       }
-      // Store token in localStorage
+
       localStorage.setItem('token', response.data.data.token);
-      return response.data; // { data: { token: "..." }, status: "success", message: "..." }
+      return response.data;
     } catch (error) {
       console.error('Login API error:', {
         status: error.response?.status,
@@ -45,7 +45,7 @@ export const register = createAsyncThunk(
       if (response.data.status === 'error') {
         throw new Error(response.data.message);
       }
-      return response.data; // { data: string, status: "success", message: "..." }
+      return response.data;
     } catch (error) {
       console.error('Register API error:', {
         status: error.response?.status,
@@ -72,11 +72,10 @@ export const verifyOtp = createAsyncThunk(
       if (response.data.status === 'error') {
         throw new Error(response.data.message);
       }
-      // Store token if returned
       if (response.data.data) {
         localStorage.setItem('token', response.data.data);
       }
-      return response.data; // { data: string, status: "success", message: "..." }
+      return response.data;
     } catch (error) {
       console.error('OTP verification error:', {
         status: error.response?.status,
@@ -101,7 +100,7 @@ export const getProfile = createAsyncThunk(
       if (response.data.status === 'error') {
         throw new Error(response.data.message);
       }
-      return response.data; // { data: { email: "...", ... }, status: "success", message: "..." }
+      return response.data;
     } catch (error) {
       console.error('Profile API error:', {
         status: error.response?.status,
@@ -137,7 +136,7 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.token = action.payload.data.token; // Access token from data
+        state.token = action.payload.data.token;
         state.user = { email: action.meta.arg.email };
         localStorage.setItem('user', JSON.stringify({ email: action.meta.arg.email }));
       })

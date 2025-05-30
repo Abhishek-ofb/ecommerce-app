@@ -15,7 +15,7 @@ function OtpVerification() {
     e.preventDefault();
     dispatch(verifyOtp({ email, otp })).then((result) => {
       if (result.meta.requestStatus === 'fulfilled') {
-        navigate('/login');
+        navigate('/');
       }
     });
   };
